@@ -1,0 +1,82 @@
+ul {
+  padding-left: 0;
+}
+
+input {
+  color: #0E4779;
+  font-size: 18px;
+  width: 580px;
+  height: 40px;
+  border: 2px dotted lightgrey;
+  box-sizing: border-box;
+  padding: 0 24px;
+  box-shadow: 
+  10px 10px 10px lightgray,
+  0px 0px 15px rgb(226, 226, 226);
+}
+
+input:focus, button:focus {
+  outline: none;
+}
+
+.map {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid rgb(221, 220, 220);
+  box-shadow: 1px 1px 5px rgb(221, 221, 221),
+              0 0 30px rgb(226, 226, 226);
+  margin-top: 80px;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  text-align: center;
+  margin: 160px auto;
+  min-width: 580px;
+  max-width: 580px;
+}
+
+.dragItem {
+  color: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 40px;
+  background: linear-gradient(lightblue, rgb(146, 193, 211));
+  border-radius: 5px;
+  margin: 10px auto;
+  box-shadow: 3px 3px 3px rgb(124, 160, 172);
+}
+
+.dragItem span {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  vertical-align: middle;
+  text-shadow: rgb(145, 185, 199) 1px 1px 1px;
+}
+
+.dragItem button {
+  position: absolute;
+  color: rgb(124, 160, 172);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 12px;
+  text-shadow: rgb(209, 229, 236) 1px 1px 3px;
+  background: lightblue;
+  border: 2px double rgb(124, 160, 172);
+  box-shadow: 0 0 7px rgb(124, 160, 172) inset,
+              3px 3px 5px rgb(242, 248, 250),
+              -3px -3px 7px rgb(203, 240, 247);
+  border-radius: 12px;
+
+  width: 24px;
+  height: 24px;
+  right: 10px;
+}
