@@ -1,57 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function List({list, setList, setListChange}) {
+    const [draggablePos, setDraggablePos] = useState(null);
+    const mutableList = list.slice();
 
-    let dragItem = null;
-    let dropItem = null;
-
-    function handleDragStart(e) {
-        dragItem = e.currentTarget.querySelector('span');
-        e.currentTarget.style.opacity = '0.4';  
-      
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/html', dragItem.innerText);
-        // return dragItem;
+    const handleDragStart = (i) => {
+        setDraggablePos(i); 
     }
     
-    function handleDragOver(e) {
-        e.preventDefault(); 
-        e.dataTransfer.dropEffect = 'move';  
+    const handleDragOver = (e) => {
+        e.preventDefault();   
         return false;
     }
     
-    function handleDrop(e) {
-        e.stopPropagation(); 
-      
-        dropItem = e.currentTarget.querySelector('span');
-        dragItem.innerText = dropItem.innerText;
-        dropItem.innerText = e.dataTransfer.getData('text/html');
-        
-        const listTags = Array.from(document.querySelectorAll('.dragItem'));
-          const newListNumbers = list.map(item => {
-            listTags.forEach((tag, i) => {
-                if (tag.querySelector('span').innerHTML === item.name) {
-                    item.pos = i;
-                }
-            })
+    const handleDrop = (i) => {
+        const droppablePos = i; 
+        const newList = mutableList.map(item => {
+            if (item.pos === droppablePos) {
+                item.pos = draggablePos;
+            } else if (item.pos === draggablePos) {
+                item.pos = droppablePos;
+            }
             return item;
         })
-        
-        setList(newListNumbers);
+
+        setList(newList);
         setListChange("yes");
-        dropItem.innerText = dragItem.innerText;
-        dragItem.innerText = e.dataTransfer.getData('text/html');
     }
 
-    function handleDragEnd(e) {
-        e.target.style.opacity = '1';
-    }
-
-    function handleChange(e, i) {
-        e.target.style.opacity = '1';
-    } 
-
-    function deletePoint(i) {
+    const deletePoint = (i) => {
         const withoutDeleted = list.filter((item) => item.pos !== i);
         const normPosition = withoutDeleted.map((item, i) => {
             item.pos = i;
@@ -65,11 +42,9 @@ export default function List({list, setList, setListChange}) {
           {list !== undefined && list.map(({id, name}, i) => (               
                 <li key={`${id}${name}`} 
                     draggable={true}
-                    onDragStart = {(e) => handleDragStart(e)}
+                    onDragStart = {() => handleDragStart(i)}
                     onDragOver = {(e) => handleDragOver(e)}
-                    onDrop = {(e) => handleDrop(e)}
-                    onDragEnd = {(e) => handleDragEnd(e, i)}
-                    onChange = {(e) => handleChange(e, i)}
+                    onDrop = {() => handleDrop(i)}
                     className={`dragItem`}>
                         <span>{name}</span>
                         <button onClick = {() => deletePoint(i)}>x</button>
